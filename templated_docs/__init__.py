@@ -9,6 +9,7 @@ from django.template import Template, Context, engines
 from django.utils.encoding import smart_bytes, smart_str
 from django.template.exceptions import TemplateDoesNotExist
 from pylokit import Office, LoKitImportError
+from bs4 import BeautifulSoup as Soup  # Auto-close invalid/broken XML tags
 import logging
 
 log = logging.getLogger(__name__)
@@ -155,6 +156,8 @@ def fill_template(
         if any(name.endswith(file) for file in ('content.xml', 'styles.xml')):
             template = Template(fix_inline_tags(data))
             data = template.render(context)
+            # Fix broken XML tags
+            data = str(Soup(data, 'xml'))
         elif name == 'META-INF/manifest.xml':
             manifest_data = data[:-20]  # Cut off the closing </manifest> tag
             continue  # We will append it at the very end

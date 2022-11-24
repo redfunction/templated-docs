@@ -14,6 +14,7 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'pylokit==0.8.1',
     'django>=3.2',
+    'beautifulsoup4==4.11.1'
 ]
 
 test_requirements = [
