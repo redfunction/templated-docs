@@ -156,8 +156,8 @@ def fill_template(
         if any(name.endswith(file) for file in ('content.xml', 'styles.xml')):
             template = Template(fix_inline_tags(data))
             data = template.render(context)
-            # Fix broken XML tags
-            data = str(Soup(data, 'xml'))
+            # # Fix broken XML tags  # TODO: needs further testing, currently breaks some templates
+            # data = str(Soup(data, 'xml'))
         elif name == 'META-INF/manifest.xml':
             manifest_data = data[:-20]  # Cut off the closing </manifest> tag
             continue  # We will append it at the very end
